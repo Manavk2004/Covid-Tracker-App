@@ -53,7 +53,7 @@ function App() {
 
     async function onCountryChange(event){
       const countryCode = event.target.value
-      const url = countryCode === "Worldwide" ? 'https://disease.sh/v3/covid/all' : `https://disease.sh/v3/covid-19/countries/${countryCode}`
+      const url = countryCode === "Worldwide" ? 'https://disease.sh/v3/covid-19/all' : `https://disease.sh/v3/covid-19/countries/${countryCode}`
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {
@@ -98,9 +98,9 @@ function App() {
           </div>
 
           <div className="app__stats">
-            <InfoBox title="Coronavirus Cases" cases={123} total={2000} />
-            <InfoBox title="Recovered" cases={1234} total={3000} />
-            <InfoBox title="Deaths" cases={12345} total={4000} />
+            <InfoBox title="Coronavirus Cases" cases={specificCountryInfo.cases} total={2000} />
+            <InfoBox title="Recovered" cases={specificCountryInfo.recovered} total={3000} />
+            <InfoBox title="Deaths" cases={specificCountryInfo.deaths} total={4000} />
           </div>
 
           <Map />
