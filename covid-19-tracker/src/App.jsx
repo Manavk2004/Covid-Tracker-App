@@ -6,13 +6,16 @@ import {
 
 import InfoBox from "./components/InfoBox.jsx"
 import { Map } from "./components/Map.jsx"
+import Table from "./components/Table.jsx"
 
 function App() {
   const [ countries, setCountries ] = useState([])
   const [ country, setCountry ] = useState("worldwide")
   const [ specificCountryInfo, setSpecificCountryInfo ] = useState("")
   const [ countryCode, setCountryCode ] = useState("")
+  const [ tableData, setTableData ] = useState([])
 
+  // Gets the basic data for the each of the countries
   useEffect(() => {
     const getCountriesData = async() => {
       await fetch("https://disease.sh/v3/covid-19/countries")
@@ -30,9 +33,24 @@ function App() {
     getCountriesData()
   }, [])
 
+  // Gets the data for the table on the right side
   useEffect(() => {
-    console.log(countries)
-  }, [countries])
+    if(tableData.length === 0){
+      const getCountryCases = async() => {
+        await fetch('https://disease.sh/v3/covid-19/countries')
+          .then(response => response.json())
+          .then(data => {
+            console.log("The data", data)
+            setTableData(data)
+          
+          })
+      }
+
+      getCountryCases()
+    }
+  })
+
+
 
   useEffect(() => {
     console.log(country)
@@ -45,6 +63,10 @@ function App() {
   useEffect(() => {
     console.log('the country code', countryCode)
   }, [countryCode])
+
+  useEffect(() => {
+    console.log('the table data', tableData)
+  }, [tableData])
 
 
   function handleClick(event){
@@ -106,6 +128,7 @@ function App() {
           <Map />
           <Card className="app_right">
             <h3>Live Cases by Country</h3>
+            <Table countries={tableData} />
             <h3>Worldwide New Cases</h3>
           </Card>
         </div>
