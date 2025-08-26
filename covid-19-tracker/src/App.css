@@ -30,6 +30,9 @@ body{
   flex: 0.9
 }
 
+.app_right{
+  padding: 1rem;
+}
 
 .app__stats{
   display: flex;

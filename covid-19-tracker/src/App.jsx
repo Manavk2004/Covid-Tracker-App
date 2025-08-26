@@ -7,6 +7,9 @@ import {
 import InfoBox from "./components/InfoBox.jsx"
 import { Map } from "./components/Map.jsx"
 import Table from "./components/Table.jsx"
+import { sortData } from "./util.js"
+import LineGraph from "./components/LineGraph.jsx"
+
 
 function App() {
   const [ countries, setCountries ] = useState([])
@@ -41,7 +44,8 @@ function App() {
           .then(response => response.json())
           .then(data => {
             console.log("The data", data)
-            setTableData(data)
+            const sortedData = sortData(data)
+            setTableData(sortedData)
           
           })
       }
@@ -130,6 +134,7 @@ function App() {
             <h3>Live Cases by Country</h3>
             <Table countries={tableData} />
             <h3>Worldwide New Cases</h3>
+            <LineGraph />
           </Card>
         </div>
 
